@@ -104,15 +104,20 @@ int main(int argc, char** argv)
 	bool finished;
 	bool *d_finished;
 
+	gpuErrorcheck(cudaMalloc(&d_dist, num_nodes * sizeof(unsigned int)));
+	gpuErrorcheck(cudaMemcpy(d_dist, dist, num_nodes * sizeof(unsigned int), cudaMemcpyHostToDevice));
+	Timer t3;
+	t3.Start();
+
 	gpuErrorcheck(cudaMalloc(&d_nodePointer, num_nodes * sizeof(unsigned int)));
 	gpuErrorcheck(cudaMalloc(&d_edgeList, (num_edges + num_nodes) * sizeof(unsigned int)));
-	gpuErrorcheck(cudaMalloc(&d_dist, num_nodes * sizeof(unsigned int)));
+	
 	gpuErrorcheck(cudaMalloc(&d_finished, sizeof(bool)));
 	gpuErrorcheck(cudaMalloc(&d_partNodePointer, vGraph.numParts * sizeof(PartPointer)));
 
 	gpuErrorcheck(cudaMemcpy(d_nodePointer, vGraph.nodePointer, num_nodes * sizeof(unsigned int), cudaMemcpyHostToDevice));
 	gpuErrorcheck(cudaMemcpy(d_edgeList, vGraph.edgeList, (num_edges + num_nodes) * sizeof(unsigned int), cudaMemcpyHostToDevice));
-	gpuErrorcheck(cudaMemcpy(d_dist, dist, num_nodes * sizeof(unsigned int), cudaMemcpyHostToDevice));
+	
 	gpuErrorcheck(cudaMemcpy(d_partNodePointer, vGraph.partNodePointer, vGraph.numParts * sizeof(PartPointer), cudaMemcpyHostToDevice));
 
 	Timer t;
@@ -159,6 +164,8 @@ int main(int argc, char** argv)
 
 	float runtime = t.Finish();
 	cout << "Processing finished in " << runtime << " (ms).\n";
+
+	cout << "Total time in " << t3.Finish() << " (ms).\n";
 		
 	
 	gpuErrorcheck(cudaMemcpy(dist, d_dist, num_nodes*sizeof(unsigned int), cudaMemcpyDeviceToHost));
