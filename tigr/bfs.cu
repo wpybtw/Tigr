@@ -75,9 +75,11 @@ int main(int argc, char** argv)
 	graph.ReadGraph();
 	
 	VirtualGraph vGraph(graph);
-	
+	Timer t22;
+	t22.Start();
 	vGraph.MakeUGraph();
-	
+	cout << "Pre-processing time in " << t22.Finish() << " (ms).\n";
+
 	uint num_nodes = graph.num_nodes;
 	uint num_edges = graph.num_edges;
 	
