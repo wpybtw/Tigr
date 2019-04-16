@@ -48,7 +48,7 @@ __global__ void kernel(unsigned int numParts,
 				break;
 			end = ofs + i*numParts;
 			
-			if(dist[edgeList[end]] == DIST_INFINITY)
+			if(dist[edgeList[end]] > level + 1)
 			{
 				dist[edgeList[end]] = level + 1;
 				*finished = false;
