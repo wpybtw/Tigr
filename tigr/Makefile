@@ -6,7 +6,7 @@ NFLAGS=-arch=sm_32
 
 SHARED=../shared
 
-all: sssp.o bfs.o cc.o pr.o sswp.o bc.o
+all: sssp.o bfs.o cc.o pr.o sswp.o bc.o pr2.o
 
 sssp.o: sssp.cu
 	$(NC) -c sssp.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o  $(CFLAGS) $(NFLAGS)
@@ -25,6 +25,9 @@ sswp.o: sswp.cu
 	
 bc.o: bc.cu
 	$(NC) -c bc.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o $(CFLAGS) $(NFLAGS)
-	
+
+pr2.o: pr2.cu
+	$(NC) -c pr2.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o $(CFLAGS) $(NFLAGS)
+
 clean:
 	rm  *.o 

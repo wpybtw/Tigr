@@ -8,7 +8,7 @@ NFLAGS=-arch=sm_32
 SHARED=shared
 TIGR=tigr
 
-all: make1 make2 sssp bfs cc pr sswp
+all: make1 make2 sssp bfs cc pr sswp pr2
 
 make1:
 	make -C $(SHARED)
@@ -33,6 +33,9 @@ sswp: $(TIGR)/sswp.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argum
 	
 bc: $(TIGR)/bc.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o
 	$(NC) $(TIGR)/bc.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o -o bc $(CFLAGS) $(NFLAGS)
+
+pr2: $(TIGR)/pr2.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o
+	$(NC) $(TIGR)/pr2.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o -o pr2 $(CFLAGS) $(NFLAGS)
 
 clean:
 	make -C $(SHARED) clean
