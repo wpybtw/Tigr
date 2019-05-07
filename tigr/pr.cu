@@ -165,7 +165,7 @@ int main(int argc, char **argv)
 	gpuErrorcheck(cudaMalloc(&d_pr2, num_nodes * sizeof(float)));
 	gpuErrorcheck(cudaMalloc(&d_partNodePointer, vGraph.numParts * sizeof(PartPointer)));
 
-Timer t3;
+	Timer t3;
 	t3.Start();
 
 	gpuErrorcheck(cudaMemcpy(d_nodePointer, vGraph.nodePointer, num_nodes * sizeof(unsigned int), cudaMemcpyHostToDevice));
@@ -200,8 +200,8 @@ Timer t3;
 				prd[i] = abs(pr1[i] - pr2[i]);
 			}
 
-			float err = *std::max_element(prd, prd + num_nodes);
-			if (err < DELTA)
+			float err = *std::max_element(prd, prd + num_nodes) *;
+			if (err < DELTA * num_nodes * 0.15)
 			{
 				finished = true;
 			}
@@ -225,17 +225,17 @@ Timer t3;
 			}
 
 			float err = *std::max_element(prd, prd + num_nodes);
-			if (err < DELTA)
+			if (err < DELTA * num_nodes * 0.15)
 			{
 				finished = true;
-				cout<<" pr convergence"<<endl;
+				cout << " pr convergence" << endl;
 			}
 			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr2, d_pr1, num_nodes, base);
 		}
-		if (finished) {
+		if (finished)
+		{
 			break;
 		}
-		
 
 		gpuErrorcheck(cudaPeekAtLastError());
 		gpuErrorcheck(cudaDeviceSynchronize());
@@ -249,9 +249,8 @@ Timer t3;
 	float runtime = t.Finish();
 	cout << "Processing finished in " << runtime << " (ms).\n";
 	cout << "Total time in " << t3.Finish() << " (ms).\n";
-		
-	
-	if(itr % 2 == 1)
+
+	if (itr % 2 == 1)
 	{
 		gpuErrorcheck(cudaMemcpy(pr1, d_pr1, num_nodes * sizeof(float), cudaMemcpyDeviceToHost));
 	}
