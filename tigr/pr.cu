@@ -111,7 +111,18 @@ __global__ void clearLabel(float *prA, float *prB, unsigned int num_nodes, float
 	if (id < num_nodes)
 	{
 		prA[id] = base + prA[id] * 0.85;
+		
+	}
+}
+
+
+__global__ void clearLabel2(float *prA, float *prB, unsigned int num_nodes, float base)
+{
+	unsigned int id = blockDim.x * blockIdx.x + threadIdx.x;
+	if (id < num_nodes)
+	{
 		prB[id] = 0;
+		
 	}
 }
 
@@ -191,7 +202,7 @@ int main(int argc, char **argv)
 													   d_edgeList,
 													   d_pr1,
 													   d_pr2);
-
+			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr1, d_pr2, num_nodes, base);
 			gpuErrorcheck(cudaMemcpy(pr1, d_pr1, num_nodes * sizeof(float), cudaMemcpyDeviceToHost));
 			gpuErrorcheck(cudaMemcpy(pr2, d_pr2, num_nodes * sizeof(float), cudaMemcpyDeviceToHost));
 			gpuErrorcheck(cudaDeviceSynchronize());
@@ -207,7 +218,7 @@ int main(int argc, char **argv)
 				finished = true;
 			}
 
-			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr1, d_pr2, num_nodes, base);
+			clearLabel2<<<num_nodes / 512 + 1, 512>>>(d_pr1, d_pr2, num_nodes, base);
 		}
 		else
 		{
@@ -217,6 +228,7 @@ int main(int argc, char **argv)
 													   d_edgeList,
 													   d_pr2,
 													   d_pr1);
+			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr2, d_pr1, num_nodes, base);										   
 			gpuErrorcheck(cudaMemcpy(pr1, d_pr1, num_nodes * sizeof(float), cudaMemcpyDeviceToHost));
 			gpuErrorcheck(cudaMemcpy(pr2, d_pr2, num_nodes * sizeof(float), cudaMemcpyDeviceToHost));
 			gpuErrorcheck(cudaDeviceSynchronize());
@@ -232,7 +244,7 @@ int main(int argc, char **argv)
 				finished = true;
 				cout << " pr convergence" << endl;
 			}
-			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr2, d_pr1, num_nodes, base);
+			clearLabel2<<<num_nodes / 512 + 1, 512>>>(d_pr2, d_pr1, num_nodes, base);
 		}
 		if (finished)
 		{
