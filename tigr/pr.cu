@@ -200,7 +200,7 @@ int main(int argc, char **argv)
 				prd[i] = abs(pr1[i] - pr2[i]);
 			}
 
-			float err = *std::max_element(prd, prd + num_nodes) *;
+			float err = *std::max_element(prd, prd + num_nodes);
 			if (err < DELTA * num_nodes * 0.15)
 			{
 				finished = true;
