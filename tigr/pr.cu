@@ -139,7 +139,7 @@ int main(int argc, char **argv)
 	pr2 = new float[num_nodes];
 	prd = new float[num_nodes];
 
-	float initPR = (float)1 / num_nodes;
+	float initPR = (float) 0.85;
 	cout << initPR << endl;
 
 	for (int i = 0; i < num_nodes; i++)
@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 			}
 
 			float err = *std::max_element(prd, prd + num_nodes);
-			if (err* num_nodes * 0.15 < DELTA )
+			if (err  < DELTA )
 			{
 				finished = true;
 			}
@@ -225,7 +225,7 @@ int main(int argc, char **argv)
 			}
 
 			float err = *std::max_element(prd, prd + num_nodes);
-			if (err* num_nodes * 0.15 < DELTA )
+			if (err  < DELTA )
 			{
 				finished = true;
 				cout << " pr convergence" << endl;
