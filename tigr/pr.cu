@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 			}
 
 			float err = *std::max_element(prd, prd + num_nodes);
-			if (err < DELTA * num_nodes * 0.15)
+			if (err* num_nodes * 0.15 < DELTA )
 			{
 				finished = true;
 			}
@@ -225,7 +225,7 @@ int main(int argc, char **argv)
 			}
 
 			float err = *std::max_element(prd, prd + num_nodes);
-			if (err < DELTA * num_nodes * 0.15)
+			if (err* num_nodes * 0.15 < DELTA )
 			{
 				finished = true;
 				cout << " pr convergence" << endl;
