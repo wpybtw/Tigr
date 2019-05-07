@@ -201,6 +201,7 @@ int main(int argc, char **argv)
 			}
 
 			float err = *std::max_element(prd, prd + num_nodes);
+			cout<<"err " <<err<<endl;
 			if (err  < DELTA )
 			{
 				finished = true;
@@ -225,6 +226,7 @@ int main(int argc, char **argv)
 			}
 
 			float err = *std::max_element(prd, prd + num_nodes);
+			cout<<"err " <<err<<endl;
 			if (err  < DELTA )
 			{
 				finished = true;
@@ -240,7 +242,7 @@ int main(int argc, char **argv)
 		gpuErrorcheck(cudaPeekAtLastError());
 		gpuErrorcheck(cudaDeviceSynchronize());
 
-	} while (itr < arguments.numberOfItrs);
+	} while ((itr < arguments.numberOfItrs)&&(!finished));
 
 	cudaDeviceSynchronize();
 
