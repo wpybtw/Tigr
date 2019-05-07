@@ -200,7 +200,7 @@ Timer t3;
 				prd[i] = abs(pr1[i] - pr2[i]);
 			}
 
-			float err = std::max_element(prd, prd + num_nodes);
+			float err = *std::max_element(prd, prd + num_nodes);
 			if (err < DELTA)
 			{
 				finished = true;
@@ -224,10 +224,11 @@ Timer t3;
 				prd[i] = abs(pr1[i] - pr2[i]);
 			}
 
-			float err = std::max_element(prd, prd + num_nodes);
+			float err = *std::max_element(prd, prd + num_nodes);
 			if (err < DELTA)
 			{
 				finished = true;
+				cout<<" pr convergence"<<endl;
 			}
 			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr2, d_pr1, num_nodes, base);
 		}
