@@ -203,7 +203,7 @@ Timer t3;
 			float err = std::max_element(prd, prd + num_nodes);
 			if (err < DELTA)
 			{
-				finish = true;
+				finished = true;
 			}
 
 			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr1, d_pr2, num_nodes, base);
@@ -227,11 +227,11 @@ Timer t3;
 			float err = std::max_element(prd, prd + num_nodes);
 			if (err < DELTA)
 			{
-				finish = true;
+				finished = true;
 			}
 			clearLabel<<<num_nodes / 512 + 1, 512>>>(d_pr2, d_pr1, num_nodes, base);
 		}
-		if (finish) {
+		if (finished) {
 			break;
 		}
 		
