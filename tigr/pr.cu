@@ -139,7 +139,7 @@ int main(int argc, char **argv)
 	pr2 = new float[num_nodes];
 	prd = new float[num_nodes];
 
-	float initPR = (float) 0.85;
+	float initPR = (float) 0.15;
 	cout << initPR << endl;
 
 	for (int i = 0; i < num_nodes; i++)
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 
 	int itr = 0;
 	// make it fast
-	float base = (float)0.15 / num_nodes;
+	float base = (float)0.15;
 	do
 	{
 		itr++;
