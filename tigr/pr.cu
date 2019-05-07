@@ -247,15 +247,10 @@ Timer t3;
 
 	float runtime = t.Finish();
 	cout << "Processing finished in " << runtime << " (ms).\n";
-<<<<<<< HEAD
-
-	if (itr % 2 == 1)
-=======
 	cout << "Total time in " << t3.Finish() << " (ms).\n";
 		
 	
 	if(itr % 2 == 1)
->>>>>>> d16a7932226d764fa20458fe326394db34cbd349
 	{
 		gpuErrorcheck(cudaMemcpy(pr1, d_pr1, num_nodes * sizeof(float), cudaMemcpyDeviceToHost));
 	}
