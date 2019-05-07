@@ -242,7 +242,7 @@ int main(int argc, char **argv)
 			if (err  < DELTA )
 			{
 				finished = true;
-				cout << " pr convergence" << endl;
+				// cout << " pr convergence" << endl;
 			}
 			clearLabel2<<<num_nodes / 512 + 1, 512>>>(d_pr2, d_pr1, num_nodes, base);
 		}
