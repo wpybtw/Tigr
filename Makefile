@@ -3,12 +3,12 @@
 CC=g++
 NC=nvcc
 CFLAGS=-std=c++11 -O3
-NFLAGS=-arch=sm_32
+NFLAGS=-arch=sm_32 -gencode=arch=compute_75,code=sm_75
 
 SHARED=shared
 TIGR=tigr
 
-all: make1 make2 sssp bfs cc pr sswp
+all: make1 make2 sssp bfs cc pr sswp pr2 bfs2
 
 make1:
 	make -C $(SHARED)
@@ -22,6 +22,9 @@ sssp: $(TIGR)/sssp.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argum
 bfs: $(TIGR)/bfs.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o
 	$(NC) $(TIGR)/bfs.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o -o bfs $(CFLAGS) $(NFLAGS)
 
+bfs2: $(TIGR)/bfs2.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o
+	$(NC) $(TIGR)/bfs2.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o -o bfs2 $(CFLAGS) $(NFLAGS)
+
 cc: $(TIGR)/cc.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o
 	$(NC) $(TIGR)/cc.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o -o cc $(CFLAGS) $(NFLAGS)
 	
@@ -33,6 +36,9 @@ sswp: $(TIGR)/sswp.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argum
 	
 bc: $(TIGR)/bc.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o
 	$(NC) $(TIGR)/bc.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o -o bc $(CFLAGS) $(NFLAGS)
+
+pr2: $(TIGR)/pr2.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o
+	$(NC) $(TIGR)/pr2.o $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o -o pr2 $(CFLAGS) $(NFLAGS)
 
 clean:
 	make -C $(SHARED) clean

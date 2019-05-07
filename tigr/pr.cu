@@ -165,6 +165,9 @@ int main(int argc, char **argv)
 	gpuErrorcheck(cudaMalloc(&d_pr2, num_nodes * sizeof(float)));
 	gpuErrorcheck(cudaMalloc(&d_partNodePointer, vGraph.numParts * sizeof(PartPointer)));
 
+Timer t3;
+	t3.Start();
+
 	gpuErrorcheck(cudaMemcpy(d_nodePointer, vGraph.nodePointer, num_nodes * sizeof(unsigned int), cudaMemcpyHostToDevice));
 	gpuErrorcheck(cudaMemcpy(d_edgeList, vGraph.edgeList, (num_edges + num_nodes) * sizeof(unsigned int), cudaMemcpyHostToDevice));
 	gpuErrorcheck(cudaMemcpy(d_pr1, pr1, num_nodes * sizeof(float), cudaMemcpyHostToDevice));
@@ -244,8 +247,15 @@ int main(int argc, char **argv)
 
 	float runtime = t.Finish();
 	cout << "Processing finished in " << runtime << " (ms).\n";
+<<<<<<< HEAD
 
 	if (itr % 2 == 1)
+=======
+	cout << "Total time in " << t3.Finish() << " (ms).\n";
+		
+	
+	if(itr % 2 == 1)
+>>>>>>> d16a7932226d764fa20458fe326394db34cbd349
 	{
 		gpuErrorcheck(cudaMemcpy(pr1, d_pr1, num_nodes * sizeof(float), cudaMemcpyDeviceToHost));
 	}

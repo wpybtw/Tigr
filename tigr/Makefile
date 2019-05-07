@@ -2,17 +2,20 @@
 CC=g++
 NC=nvcc
 CFLAGS=-std=c++11 -O3
-NFLAGS=-arch=sm_32
+NFLAGS=-arch=sm_32 -gencode=arch=compute_75,code=sm_75
 
 SHARED=../shared
 
-all: sssp.o bfs.o cc.o pr.o sswp.o bc.o
+all: sssp.o bfs.o cc.o pr.o sswp.o bc.o pr2.o bfs2.o
 
 sssp.o: sssp.cu
 	$(NC) -c sssp.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o  $(CFLAGS) $(NFLAGS)
 	
 bfs.o: bfs.cu
 	$(NC) -c bfs.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o $(CFLAGS) $(NFLAGS)
+
+bfs2.o: bfs2.cu
+	$(NC) -c bfs2.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o $(CFLAGS) $(NFLAGS)
 
 cc.o: cc.cu
 	$(NC) -c cc.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o $(CFLAGS) $(NFLAGS)
@@ -25,6 +28,9 @@ sswp.o: sswp.cu
 	
 bc.o: bc.cu
 	$(NC) -c bc.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o $(CFLAGS) $(NFLAGS)
-	
+
+pr2.o: pr2.cu
+	$(NC) -c pr2.cu $(SHARED)/graph.o $(SHARED)/virtual_graph.o $(SHARED)/argument_parsing.o $(SHARED)/timer.o $(SHARED)/tigr_utilities.o $(CFLAGS) $(NFLAGS)
+
 clean:
 	rm  *.o 
